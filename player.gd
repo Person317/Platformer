@@ -32,7 +32,8 @@ func _physics_process(delta):
 		
 	move_and_slide()
 	update_animation()
-	
+	update_facing_direction()
+
 func update_animation():
 	if not animation_locked:
 		if direction.x != 0:
@@ -40,4 +41,9 @@ func update_animation():
 		else:
 			animated_sprite.play("Idle")
 		
+func update_facing_direction():
+		if direction.x > 0:
+			animated_sprite.flip_h = false
+		elif direction.x < 0:
+			animated_sprite.flip_h = true 
 

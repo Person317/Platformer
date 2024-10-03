@@ -47,9 +47,6 @@ func update_facing_direction():
 		elif direction.x < 0:
 			animated_sprite.flip_h = true
 
-func killPlayer():
-	position  = %RespawnPoint.position 
-	$AnimatedSprite2D.flip_h = false
-	
-func _on_death_area_body_entered(body:Node2D) -> void:
-		killPlayer()
+func _on_killzone_body_entered(body:Node2D):
+	get_tree().reload_current_scene()
+		

@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://cy36fumu3tn4u"]
+
+[ext_resource type="Texture2D" uid="uid://cjt2mlsvmarxw" path="res://Asset/Background Sprites/PixelPlatformerSet2v.1.1/Anim/diamond1.png" id="1_qu63p"]
+[ext_resource type="Texture2D" uid="uid://cfecajxptjd2a" path="res://Asset/Background Sprites/PixelPlatformerSet2v.1.1/Anim/diamond2.png" id="2_unpuf"]
+[ext_resource type="Texture2D" uid="uid://cnfs44pmst3o7" path="res://Asset/Background Sprites/PixelPlatformerSet2v.1.1/Anim/diamond3.png" id="3_1mpyb"]
+[ext_resource type="Texture2D" uid="uid://bqqvwfnt5r4aa" path="res://Asset/Background Sprites/PixelPlatformerSet2v.1.1/Anim/diamond4.png" id="4_fvl21"]
+[ext_resource type="Texture2D" uid="uid://duo02r7dy45wg" path="res://Asset/Background Sprites/PixelPlatformerSet2v.1.1/Anim/diamond5.png" id="5_uxsm4"]
+
+[sub_resource type="GDScript" id="GDScript_vbq1d"]
+script/source = "extends Area2D
+
+signal gem_collected
+
+func _on_body_entered(body):
+	if body.name == \"Player\":
+		print_debug(\"player got gem!\")
+	Global.gems_collected += 1
+	gem_collected.emit()
+	queue_free()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w24lr"]
+size = Vector2(8, 10)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5x1cw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qu63p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_unpuf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1mpyb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_fvl21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_uxsm4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Gem" type="Area2D"]
+script = SubResource("GDScript_vbq1d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_w24lr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -9.96888e-06)
+scale = Vector2(1, 1.11111)
+sprite_frames = SubResource("SpriteFrames_5x1cw")
+frame = 1
+frame_progress = 0.395871
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
